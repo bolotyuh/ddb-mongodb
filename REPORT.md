@@ -9,13 +9,16 @@ $ python -m app.import_data_to_mongo
 ```
 
 2. Напишіть запит, який виводіть усі товари
+`>>>QUERY`
 
-```json
+```javascript
+db.getCollection('items').find({})
+```
+
+```javascript
 [
   {
-    "_id": ObjectId(
-    "603b99fb9ecc2098454d4136"
-    ),
+    "_id": ObjectId("603b99fb9ecc2098454d4136"),
     "brand": "OnePlus",
     "os": "Android",
     "name": "Xiaomi Redmi Note 9",
@@ -33,9 +36,7 @@ $ python -m app.import_data_to_mongo
     "internal_storage_memory": "64Gb"
   },
   {
-    "_id": ObjectId(
-    "603b99fb9ecc2098454d413d"
-    ),
+    "_id": ObjectId("603b99fb9ecc2098454d413d"),
     "category": "Computer",
     "price": 5504,
     "description": "Live compare dark especially. Miss think police perhaps five already. Great tax lawyer including. Very development degree quickly.",
@@ -72,7 +73,7 @@ db.items.aggregate(
 
 `>>>RESULT`
 
-```json
+```javascript
 [
   {
     "_id": "Smart watch",
@@ -102,7 +103,7 @@ db.items.distinct('category').length
 
 `>>>RESULT`
 
-```json
+```javascript
 4
 ```
 
@@ -115,7 +116,7 @@ db.items.distinct('brand')
 
 `>>>RESULT`
 
-```json
+```javascript
 [
   "OnePlus",
   "Hisense",
@@ -174,11 +175,9 @@ db.getCollection('items').find({'promo': {'$exists': true}})
 
 `>>>RESULT`
 
-```json
+```javascript
 {
-  "_id": ObjectId(
-  "603b99fb9ecc2098454d4151"
-  ),
+  "_id": ObjectId("603b99fb9ecc2098454d4151"),
   "category": "Computer",
   "price": 5549.0,
   "description": "Find prepare hair across hour notice east. Attack attack political course trip. Place politics late.",
@@ -226,11 +225,9 @@ db.getCollection('orders').find({})
 
 `>>>RESULT`
 
-```json
+```javascript
 {
-  "_id": ObjectId(
-  "603bacce876e0d4992f86a08"
-  ),
+  "_id": ObjectId("603bacce876e0d4992f86a08"),
   "order_number": 77794204,
   "total_sum": 448391,
   "payment": {
@@ -240,15 +237,11 @@ db.getCollection('orders').find({})
   "order_items_id": [
     {
       "ref": "items",
-      "id": ObjectId(
-      "603bab264653b65cd91673ee"
-      )
+      "id": ObjectId("603bab264653b65cd91673ee")
     },
     {
       "ref": "items",
-      "id": ObjectId(
-      "603baca1ca03a20d727226be"
-      )
+      "id": ObjectId("603baca1ca03a20d727226be")
     }
   ],
   "customer": {
@@ -271,11 +264,9 @@ db.getCollection('orders').find({'total_sum': {'$gte': 5000}})
 
 `>>>RESULT`
 
-```json
+```javascript
 {
-  "_id": ObjectId(
-  "603bacce876e0d4992f86a0b"
-  ),
+  "_id": ObjectId("603bacce876e0d4992f86a0b"),
   "order_number": 98611112,
   "total_sum": 747771,
   "payment": {
@@ -285,9 +276,7 @@ db.getCollection('orders').find({'total_sum': {'$gte': 5000}})
   "order_items_id": [
     {
       "ref": "items",
-      "id": ObjectId(
-      "603bacce876e0d4992f868f4"
-      )
+      "id": ObjectId("603bacce876e0d4992f868f4")
     }
   ],
   "customer": {
@@ -310,11 +299,9 @@ db.getCollection('orders').find({'customer.username': 'jeffrey81'})
 
 `>>>RESULT`
 
-```json
+```javascript
 {
-  "_id": ObjectId(
-  "603bacce876e0d4992f86a0b"
-  ),
+  "_id": ObjectId("603bacce876e0d4992f86a0b"),
   "order_number": 98611112,
   "total_sum": 747771,
   "payment": {
@@ -324,9 +311,7 @@ db.getCollection('orders').find({'customer.username': 'jeffrey81'})
   "order_items_id": [
     {
       "ref": "items",
-      "id": ObjectId(
-      "603bacce876e0d4992f868f4"
-      )
+      "id": ObjectId("603bacce876e0d4992f868f4")
     }
   ],
   "customer": {
@@ -349,12 +334,10 @@ db.getCollection('orders').find({'order_items_id.id': ObjectId("603bacd7d8ad58cc
 
 `>>>RESULT`
 
-```json
+```javascript
 /* 1 */
 {
-  "_id": ObjectId(
-  "603bacd7d8ad58ccfdb0129c"
-  ),
+  "_id": ObjectId("603bacd7d8ad58ccfdb0129c"),
   "order_number": 52796393,
   "date": ISODate(
   "2019-03-20T03:25:45.000Z"
@@ -548,7 +531,7 @@ db.orders.aggregate({'$match':{"order_number": 25101348} }, {$project: { count: 
 
 `>>>RESULT`
 
-```json
+```javascript
 {
     "_id" : ObjectId("603bacd7d8ad58ccfdb012b9"),
     "count" : 9
@@ -563,7 +546,7 @@ db.getCollection('orders').find({'total_sum': {'$gte': 2343}}, {'customer': 1, '
 
 `>>>RESULT`
 
-```json
+```javascript
 [{
     "_id" : ObjectId("603bacce876e0d4992f86a07"),
     "payment" : {
@@ -601,7 +584,7 @@ db.getCollection('orders').remove({'date':{'$gte': new ISODate("2017-04-14T23:59
 
 `>>>RESULT`
 Removed 4 record(s) in 5ms
-```json
+```javascript
 ```
 
 10. Перейменуйте у всіх замовлення ім'я (прізвище) замовника
@@ -613,7 +596,7 @@ db.getCollection('orders').updateMany({}, {'$set':{'customer.name': 'Bob'}})
 
 `>>>RESULT`
 
-```json
+```javascript
 {
     "acknowledged" : true,
     "matchedCount" : 96.0,
@@ -640,7 +623,7 @@ db.getCollection('orders').aggregate([
 
 `>>>RESULT`
 
-```json
+```javascript
 {
     "_id" : ObjectId("603bacce876e0d4992f86a08"),
     "customer" : {
