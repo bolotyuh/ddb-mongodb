@@ -8,3 +8,5 @@
 ```bash
 $ docker-compose exec app python -m app.import_data_to_mongo
 ```
+
+### [Виконане завдання](REPORT.md)
